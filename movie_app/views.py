@@ -20,7 +20,7 @@ def director_detail_view(request, id):
         return Response(data={
             "message": f"Режиссёр не найден"
         }, status=status.HTTP_404_NOT_FOUND)
-    serializer = DirectorSerializer(director)
+    serializer = DirectorDetailSerializer(director)
     return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 
@@ -46,7 +46,7 @@ def movie_detail_view(request, id):
 @api_view(['GET'])
 def review_list_view(request):
     reviews = Review.objects.all()
-    serializer = ReviewSerializer(reviews, many=True)
+    serializer = ReviewDetailSerializer(reviews, many=True)
     return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 
