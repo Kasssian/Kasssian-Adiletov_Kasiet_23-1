@@ -77,5 +77,3 @@ class DirectorDetailSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     directors_movie = MovieSerializer(many=True)
-
-
