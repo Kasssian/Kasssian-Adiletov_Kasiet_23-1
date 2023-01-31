@@ -5,6 +5,15 @@ from rest_framework.decorators import api_view
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
+from users.serializers import UserCreateSerializer, UserValidateSerializer
+
+
+@api_view(['POST'])
+def registration(request):
+    serializer = UserCreateSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    User.objects.create_user(**serializer.validated_data)
+    return Response(status=status.HTTP_201_CREATED)
 
 
 @api_view(['POST'])
