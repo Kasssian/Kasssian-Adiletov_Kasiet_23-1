@@ -33,30 +33,11 @@ class MovieValidateSerializer(serializers.Serializer):
     title = serializers.CharField(min_length=1)
     description = serializers.CharField(min_length=1)
     duration = serializers.IntegerField(default=0)
-    director = serializers.IntegerField(min_value=1)
-
-    def validate_title(self, title):
-        title_exists = Movie.objects.filter(title=title).exists()
-        if not title_exists:
-            return title
-        raise ValidationError('Фильм с таким названием не найден')
-
-    def validate_directors(self, directors):
-        directors_id = [i[0] for i in Director.objects.all().values_list('id')]
-        for id in directors:
-            if id not in directors_id:
-                raise ValidationError(f'Режиссер с таким ID ({id}) не найден!')
-        return directors
+    director_id = serializers.IntegerField(min_value=1)
 
 
 class DirectorValidateSerializer(serializers.Serializer):
     name = serializers.CharField(min_length=1)
-
-    def validate_name(self, name):
-        name_exists = Director.objects.filter(name=name).exists()
-        if not name_exists:
-            return name
-        raise ValidationError('Режиссер с таким именем не найден')
 
 
 class ReviewValidateSerializer(serializers.Serializer):
